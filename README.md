@@ -1,0 +1,2 @@
+# pariksha
+ Pariksha Wordpress Plugin
