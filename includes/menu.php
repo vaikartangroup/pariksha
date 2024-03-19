@@ -28,6 +28,14 @@ function user_info_plugin_menu()
         'results', // Menu slug
         'display_results_page' // Callback function to display page content
     );
+    add_submenu_page(
+        'pariksha-plugin', // Parent slug
+        'Contact', // Page title
+        'Contact', // Menu title
+        'manage_options', // Capability
+        'contact', // Menu slug
+        'contact_us' // Callback function to display page content
+    );
 }
 
 function display_exam_details_page() {
@@ -38,6 +46,11 @@ function display_exam_details_page() {
 function display_results_page() {
     // Display your Results page content here
     include_once plugin_dir_path(__FILE__) . '../results.php';
+}
+
+function contact_us() {
+    // Display your Results page content here
+    include_once plugin_dir_path(__FILE__) . '../contact.php';
 }
 // Hook into WordPress admin menu
 add_action('admin_menu', 'user_info_plugin_menu');

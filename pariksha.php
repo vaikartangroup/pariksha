@@ -78,6 +78,8 @@ dbDelta($sql3);
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 }
 
+
+
 // Function to drop tables on plugin deactivation
 function my_plugin_drop_tables() {
     global $wpdb;
