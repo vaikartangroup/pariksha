@@ -86,163 +86,199 @@ function display_user_info_shortcode($atts)
 
                                 if ($num_rows_status == 1) {
                                     foreach ($results_exams as $exam) {
+                                        $status = $exam->ex_status;
+                                        $time = $exam->scheduled_time;
 
-                                        ?>
-                                        <center>
-                                            <div class="warning-box" id="warningBox">
-                                                <br><br><br>
+                                        if ($status == 1) { ?>
+                                            <center>
+                                                <div class="warning-box" id="warningBox">
+                                                    <br><br><br>
 
-                                                <div class="icon-warning">
-                                                    <h2>Are You Sure?</h2>
-                                                </div>
-                                                <div class="icon-warning">
-                                                    <h5>You want to take this exam now, your time will start automatically!</h5>
-                                                </div>
-                                                <div style="gap:2%;">
-                                                    <button type="button" class="swal2-confirm swal2-styled" id="start_exam"
-                                                        style="display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 10px 20px; color: white; font-size: 16px; border: none; cursor: pointer; margin-right: 10px;"
-                                                        aria-label="" onclick="showOtherContents()">Yes, start now!</button>
+                                                    <div class="icon-warning">
+                                                        <h2>Are You Sure?</h2>
+                                                    </div>
+                                                    <div class="icon-warning">
+                                                        <h5>You want to take this exam now, your time will start automatically!</h5>
+                                                    </div>
+                                                    <div style="gap:2%;">
+                                                        <button type="button" class="swal2-confirm swal2-styled" id="start_exam"
+                                                            style="display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 10px 20px; color: white; font-size: 16px; border: none; cursor: pointer; margin-right: 10px;"
+                                                            aria-label="" onclick="showOtherContents()">Yes, start now!</button>
 
-                                                    <button type="button" class="swal2-cancel swal2-styled"
-                                                        style="display: inline-block; background-color: rgb(221, 51, 51); padding: 10px 20px; color: white; font-size: 16px; border: none; cursor: pointer;"
-                                                        aria-label="" onclick="window.location.href = '<?php echo esc_url(home_url()); ?>';">Cancel</button>
+                                                        <button type="button" class="swal2-cancel swal2-styled"
+                                                            style="display: inline-block; background-color: rgb(221, 51, 51); padding: 10px 20px; color: white; font-size: 16px; border: none; cursor: pointer;"
+                                                            aria-label="" onclick="window.location.href = '<?php echo esc_url(home_url()); ?>';">Cancel</button>
+                                                    </div>
+                                                    <br><br><br>
                                                 </div>
-                                                <br><br><br>
-                                            </div>
-                                            <div id="mainContents" style="display:none">
-                                                <!-- Question Fields -->
-                                                <div class="app-main__inner">
-                                                    <div class="col-md-12">
-                                                        <div class="app-page-title">
-                                                            <div class="page-title-wrapper">
-                                                                <div class="page-title-heading">
-                                                                    <div>
-                                                                        <h3>
-                                                                            <?php echo $exam->ex_title; ?>
-                                                                        </h3>
-                                                                        <div class="page-title-subheading">
-                                                                            <h5>
-                                                                                <?php echo $exam->ex_description; ?>
-                                                                            </h5>
+                                                <div id="mainContents" style="display:none">
+                                                    <!-- Question Fields -->
+                                                    <div class="app-main__inner">
+                                                        <div class="col-md-12">
+                                                            <div class="app-page-title">
+                                                                <div class="page-title-wrapper">
+                                                                    <div class="page-title-heading">
+                                                                        <div>
+                                                                            <h3>
+                                                                                <?php echo $exam->ex_title; ?>
+                                                                            </h3>
+                                                                            <div class="page-title-subheading">
+                                                                                <h5>
+                                                                                    <?php echo $exam->ex_description; ?>
+                                                                                </h5>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="page-title-actions mr-5" style="font-size: 20px;">
-                                                                    <form name="cd">
-                                                                        <input type="hidden" name="" id="timeExamLimit"
-                                                                            value="<?php echo $exam->ex_time_limit; ?>">
-                                                                        <label>Remaining Time : </label>
-                                                                        <input style="border:none;background-color: transparent;color:blue;" name="disp"
-                                                                            type="text" class="clock" id="txt" value="00:00" size="4" readonly="true" />minutes
-                                                                    </form>
+                                                                    <div class="page-title-actions mr-5" style="font-size: 20px;">
+                                                                        
+                                                                        <?php 
+                                                                         if (empty($time)) {
+                                                                            ?>
+                                                                            <form name="cd">
+                                                                            <input type="hidden" name="" id="timeExamLimit"
+                                                                                value="<?php echo $exam->ex_time_limit; ?>">
+                                                                            <label>Remaining Time : </label>
+                                                                            <input style="border:none;background-color: transparent;color:blue;" name="disp"
+                                                                                type="text" class="clock" id="txt" value="00:00" size="4" readonly="true" />minutes
+                                                                        </form>
+                                                                        <?
+                                                                        }
+                                                                        else{
+                                                                         ?>
+                                                                         <button id="liveButton"
+                                                                            style="display: none; position: fixed; top: 20px; right: 20px; background-color: red; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; z-index: 9999;">
+                                                                            Live
+                                                                        </button>
+                                                                         <?php }
+                                                                        ?>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
-                                                    <div class="col-md-12 p-0 mb-4 question-list">
-                                                        <center>
-                                                            <form method="post" id="submitAnswerFrm">
-                                                                <input type="hidden" name="exam_id" id="exam_id" value="<?php echo $examination_id; ?>">
-                                                                <input type="hidden" name="examAction" id="examAction">
-                                                                <input type="hidden" name="examineeid" id="examineeid" value="<?php echo $current_user_id; ?>">
-                                                                <table class="align-middle mb-0 table table-borderless table-striped table-hover"
-                                                                    id="tableList">
-                                                                    <?php
-                                                                    $exam_questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}exam_question_tbl WHERE exam_id = %d ORDER BY RAND() LIMIT %d", $examination_id, $exam->ex_questlimit_display));
-                                                                    if (!empty ($exam_questions)) {
-                                                                        $i = 1;
-                                                                        foreach ($exam_questions as $question) { ?>
+                                                        <div class="col-md-12 p-0 mb-4 question-list">
+                                                            <center>
+                                                                <form method="post" id="submitAnswerFrm">
+                                                                    <input type="hidden" name="exam_id" id="exam_id" value="<?php echo $examination_id; ?>">
+                                                                    <input type="hidden" name="examAction" id="examAction">
+                                                                    <input type="hidden" name="examineeid" id="examineeid" value="<?php echo $current_user_id; ?>">
+                                                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover"
+                                                                        id="tableList">
+                                                                        <?php
+                                                                        $exam_questions = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}exam_question_tbl WHERE exam_id = %d ORDER BY RAND() LIMIT %d", $examination_id, $exam->ex_questlimit_display));
+                                                                        if (!empty($exam_questions)) {
+                                                                            $i = 1;
+                                                                            foreach ($exam_questions as $question) { ?>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p><b>
+                                                                                                <?php echo $i++; ?> .)
+
+                                                                                                <?php echo $question->exam_question; ?>
+                                                                                                <?php if (!empty($question->question_image)) {
+                                                                                                    echo '<br><img src="' . $question->question_image . '" style="width: 50%;">';
+                                                                                                }
+                                                                                                ?>
+                                                                                            </b></p>
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-6 form-group pl-4 ">
+                                                                                                <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
+                                                                                                    value="<?php echo $question->exam_ch1; ?>" class="form-check-input"
+                                                                                                    type="radio" value="" id="invalidCheck" required>
+
+                                                                                                <label class="form-check-label" for="invalidCheck">
+                                                                                                    <?php echo $question->exam_ch1; ?>
+                                                                                                </label>
+                                                                                            </div>
+
+                                                                                            <div class="col-lg-6 form-group pl-4">
+                                                                                                <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
+                                                                                                    value="<?php echo $question->exam_ch2; ?>" class="form-check-input"
+                                                                                                    type="radio" value="" id="invalidCheck" required>
+
+                                                                                                <label class="form-check-label" for="invalidCheck">
+                                                                                                    <?php echo $question->exam_ch2; ?>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-6 form-group pl-4">
+                                                                                                <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
+                                                                                                    value="<?php echo $question->exam_ch3; ?>" class="form-check-input"
+                                                                                                    type="radio" value="" id="invalidCheck" required>
+
+                                                                                                <label class="form-check-label" for="invalidCheck">
+                                                                                                    <?php echo $question->exam_ch3; ?>
+                                                                                                </label>
+                                                                                            </div>
+
+                                                                                            <div class="col-lg-6 form-group pl-4">
+                                                                                                <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
+                                                                                                    value="<?php echo $question->exam_ch4; ?>" class="form-check-input"
+                                                                                                    type="radio" value="" id="invalidCheck" required>
+
+                                                                                                <label class="form-check-label" for="invalidCheck">
+                                                                                                    <?php echo $question->exam_ch4; ?>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            <?php }
+                                                                            ?>
                                                                             <tr>
-                                                                                <td>
-                                                                                    <p><b>
-                                                                                            <?php echo $i++; ?> .)
-
-                                                                                            <?php echo $question->exam_question; ?>
-                                                                                            <?php if (!empty ($question->question_image)) {
-                                                                                                echo '<br><img src="' . $question->question_image . '" style="width: 50%;">';
-                                                                                            }
-                                                                                            ?>
-                                                                                        </b></p>
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-6 form-group pl-4 ">
-                                                                                            <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
-                                                                                                value="<?php echo $question->exam_ch1; ?>" class="form-check-input"
-                                                                                                type="radio" value="" id="invalidCheck" required>
-
-                                                                                            <label class="form-check-label" for="invalidCheck">
-                                                                                                <?php echo $question->exam_ch1; ?>
-                                                                                            </label>
-                                                                                        </div>
-
-                                                                                        <div class="col-lg-6 form-group pl-4">
-                                                                                            <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
-                                                                                                value="<?php echo $question->exam_ch2; ?>" class="form-check-input"
-                                                                                                type="radio" value="" id="invalidCheck" required>
-
-                                                                                            <label class="form-check-label" for="invalidCheck">
-                                                                                                <?php echo $question->exam_ch2; ?>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <div class="col-lg-6 form-group pl-4">
-                                                                                            <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
-                                                                                                value="<?php echo $question->exam_ch3; ?>" class="form-check-input"
-                                                                                                type="radio" value="" id="invalidCheck" required>
-
-                                                                                            <label class="form-check-label" for="invalidCheck">
-                                                                                                <?php echo $question->exam_ch3; ?>
-                                                                                            </label>
-                                                                                        </div>
-
-                                                                                        <div class="col-lg-6 form-group pl-4">
-                                                                                            <input name="answer[<?php echo $question->eqt_id; ?>][correct]"
-                                                                                                value="<?php echo $question->exam_ch4; ?>" class="form-check-input"
-                                                                                                type="radio" value="" id="invalidCheck" required>
-
-                                                                                            <label class="form-check-label" for="invalidCheck">
-                                                                                                <?php echo $question->exam_ch4; ?>
-                                                                                            </label>
-                                                                                        </div>
+                                                                                <td style="padding: 20px;" class="row">
+                                                                                    <div class="col-lg-2">
+                                                                                        <input name="submit" type="submit" value="Submit" id="submitAnswerFrmBtn"
+                                                                                            style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; transition-duration: 0.4s; cursor: pointer;">
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                        <?php }
-                                                                        ?>
-                                                                        <tr>
-                                                                            <td style="padding: 20px;" class="row">
-                                                                                <div class="col-lg-2">
-                                                                                    <input name="submit" type="submit" value="Submit" id="submitAnswerFrmBtn"
-                                                                                        style="background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; transition-duration: 0.4s; cursor: pointer;">
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <?php
-                                                                    } else { ?>
-                                                                        <b>No questions available at this moment</b>
-                                                                    <?php } ?>
-                                                                </table>
+                                                                            <?php
+                                                                        } else { ?>
+                                                                            <b>No questions available at this moment</b>
+                                                                        <?php } ?>
+                                                                    </table>
 
-                                                            </form>
-                                                        </center>
+                                                                </form>
+                                                            </center>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <script>
-                                                function showOtherContents() {
-                                                    var warningBox = document.getElementById('warningBox');
-                                                    var mainContents = document.getElementById('mainContents');
+                                                <script>
+                                                    function showOtherContents() {
+                                                        var warningBox = document.getElementById('warningBox');
+                                                        var mainContents = document.getElementById('mainContents');
 
-                                                    if (warningBox && mainContents) {
-                                                        warningBox.style.display = 'none';
-                                                        mainContents.style.display = 'block';
+                                                        if (warningBox && mainContents) {
+                                                            warningBox.style.display = 'none';
+                                                            mainContents.style.display = 'block';
+                                                        }
                                                     }
-                                                }
 
-                                            </script>
-                                        </center>
-                                        <?php
+                                                </script>
+                                            </center>
+                                        <?
+                                        } else { ?>
+                                            <center>
+                                                <div class="warning-box" id="warningBox">
+                                                    <br><br><br>
+
+                                                    <div class="icon-warning">
+                                                        <h2>The exam is either not stared yet or has been finished.</h2>
+                                                    </div>
+                                                    <div class="icon-warning">
+                                                        <h5>The exam had been scheduled for
+                                                            <?php echo $time; ?>
+                                                        </h5>
+                                                    </div>
+
+                                                    <br><br><br>
+                                                </div>
+                                            </center>
+                                        <?
+
+                                        }
                                         return ob_get_clean();
                                     }
                                 } else {
@@ -284,12 +320,16 @@ function display_user_info_shortcode($atts)
 
                                     <div class="col-md-12">
                                         <center>
-                                        <div class="col-md-12" style="margin-left: 2%;">
-                                        <h2><?php echo $exam->ex_title; ?></h2>
-                                        <p><?php echo $exam->ex_description; ?></p>
+                                            <div class="col-md-12" style="margin-left: 2%;">
+                                                <h2>
+                                                    <?php echo $exam->ex_title; ?>
+                                                </h2>
+                                                <p>
+                                                    <?php echo $exam->ex_description; ?>
+                                                </p>
 
-                                            <h4 class="text-primary">RESULTS</h4>
-                                        </div>
+                                                <h4 class="text-primary">RESULTS</h4>
+                                            </div>
                                         </center>
                                         <div class="row" style="margin: 2%">
                                             <div class="col-md-6">

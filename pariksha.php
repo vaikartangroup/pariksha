@@ -74,8 +74,30 @@ dbDelta($sql3);
       dbDelta($sql4);
       
 
+
     // Make sure to include dbDelta() only once after all table creation queries
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+
+    $plugin_images_dir = plugin_dir_path(__FILE__) . 'images/'; // Path to your plugin's images directory
+    $upload_dir = wp_upload_dir(); // Get the uploads directory path
+
+    $images_to_upload = array(
+        'enroll.png',
+        'login.png',
+        'exam.png',
+        // Add more images here if needed
+    );
+
+    foreach ($images_to_upload as $image) {
+        $image_path = $plugin_images_dir . $image;
+
+        if (file_exists($image_path)) {
+            // Move the image to the uploads directory
+            $destination_path = $upload_dir['path'] . '/' . $image;
+            copy($image_path, $destination_path);
+        }
+    }
 }
 
 
