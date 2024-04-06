@@ -85,4 +85,10 @@ jQuery(document).ready(function ($) {
     $(window).on('unload', function () {
         clearTimeout(cdTimer);
     });
+
+
+
+    
 });
+
+// Check if page is refreshed
